@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     # 自动打开第一个页面
-    path('', include('AwakenedAlliance.urls')),
+    path('', include('AwakenedAlliance.urls.index')),
     path('admin/', admin.site.urls),
 ]
