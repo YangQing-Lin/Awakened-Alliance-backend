@@ -3,7 +3,7 @@
 # python3 /home/aa/GraduationProject/manage.py runserver 0.0.0.0:8000
 
 # 更新数据库结构(之后写游戏的时候可以注释掉，只有需要的时候才调用)
-# ./register_database.sh
+./register_database.sh
 
 # 归档静态文件
 echo yes | python3 /home/aa/GraduationProject/manage.py collectstatic
