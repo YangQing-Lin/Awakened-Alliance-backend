@@ -8,6 +8,7 @@ class GetRankListView(APIView):
     # permission_classes = ([IsAuthenticated])
 
     def get(self, request):
+        # 如果没有登陆就一直把id=1的用户当成自己
         me = Player.objects.get(user_id=1)
         res = {
             'me': {
@@ -21,10 +22,11 @@ class GetRankListView(APIView):
 
         players = Player.objects.all().order_by('-score')[:10]
         for player in players:
-            res['all'] = {
-                'uername': player.user.username,
+            res['all'].append({
+                'username': player.user.username,
                 'photo': player.photo,
                 'score': player.score,
                 'rank': Player.objects.filter(score__gt=player.score).count() + 1,
-            }
+            })
+
         return Response(res)
