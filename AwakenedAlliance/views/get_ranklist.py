@@ -5,7 +5,8 @@ from AwakenedAlliance.models.player.player import Player
 
 
 class GetRankListView(APIView):
-    # permission_classes = ([IsAuthenticated])
+    # 权限(Permission)的校验发生验证用户身份以后，是由系统根据分配权限确定用户可以访问何种资源以及对这种资源进行何种操作，这个过程也被称为授权(Authorization)。
+    permission_classes = ([IsAuthenticated])
 
     def get(self, request):
         # 如果没有登陆就一直把id=1的用户当成自己
