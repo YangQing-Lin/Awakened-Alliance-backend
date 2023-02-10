@@ -5,19 +5,26 @@ from AwakenedAlliance.models.player.player import Player
 def getinfo_acapp(request):
     player = Player.objects.all()[0]
     return JsonResponse({
-        'result': "ssuccess",
+        'result': "success",
         'username': player.user.username,
         'photo': player.photo,
     })
 
 
 def getinfo_web(request):
-    player = Player.objects.all()[0]
-    return JsonResponse({
-        'result': "ssuccess",
-        'username': player.user.username,
-        'photo': player.photo,
-    })
+    # 判断是否登录
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({
+            'result': "Not Logged In",
+        })
+    else:
+        player = Player.objects.all()[0]
+        return JsonResponse({
+            'result': "success",
+            'username': player.user.username,
+            'photo': player.photo,
+        })
 
 
 def getinfo(request):

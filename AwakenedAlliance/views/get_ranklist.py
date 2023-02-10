@@ -9,8 +9,8 @@ class GetRankListView(APIView):
     permission_classes = ([IsAuthenticated])
 
     def get(self, request):
-        # 如果没有登陆就一直把id=1的用户当成自己
-        me = Player.objects.get(user_id=1)
+        # 没有登录可以用user_id=1强制搜索第一个用户，user=request.user就指的是登录的用户
+        me = Player.objects.get(user=request.user)
         res = {
             'me': {
                 'username': me.user.username,
