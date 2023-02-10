@@ -3,6 +3,10 @@ from AwakenedAlliance.models.player.player import Player
 
 
 def getinfo_acapp(request):
+    print("******")
+    print("get info acapp")
+    print("username:", user)
+    print("********")
     player = Player.objects.all()[0]
     return JsonResponse({
         'result': "success",
@@ -14,9 +18,14 @@ def getinfo_acapp(request):
 def getinfo_web(request):
     # 判断是否登录
     user = request.user
+    print("----------")
+    print("get info web")
+    print("username:", user)
+    print(request)
+    print("----------")
     if not user.is_authenticated:
         return JsonResponse({
-            'result': "Not Logged In",
+            'result': "未登录",
         })
     else:
         player = Player.objects.all()[0]

@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import login
 from django.contrib.auth.models import User
-from game.models.player.player import Player
+from AwakenedAlliance.models.player.player import Player
 
 
 
