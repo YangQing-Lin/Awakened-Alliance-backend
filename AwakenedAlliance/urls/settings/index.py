@@ -4,6 +4,7 @@ from AwakenedAlliance.views.settings.getinfo_jwt import InfoView
 from AwakenedAlliance.views.settings.login import signin
 from AwakenedAlliance.views.settings.logout import signout
 from AwakenedAlliance.views.settings.register import register
+from AwakenedAlliance.views.settings.register_jwt import PlayerView
 
 
 # 有了jwt验证之后，login可以删掉了
@@ -17,4 +18,5 @@ urlpatterns = [
     path("login/", signin, name="settings_login"),
     path("logout/", signout, name="settings_logout"),
     path("register/", register, name="settings_register"),
+    path("register_jwt/", PlayerView.as_view(), name="settings_register_jwt"),
 ]

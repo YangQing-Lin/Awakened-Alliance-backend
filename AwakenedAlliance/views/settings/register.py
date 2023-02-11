@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from AwakenedAlliance.models.player.player import Player
 
 
-
 def register(request):
     data = request.GET
     username = data.get("username", "").strip()
