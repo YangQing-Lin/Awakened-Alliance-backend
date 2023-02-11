@@ -4,7 +4,7 @@ from AwakenedAlliance.models.player.player import Player
 
 def getinfo_acapp(request):
     print("******")
-    print("get info acapp")
+    print("getinfo acapp")
     print("username:", user)
     print("********")
     player = Player.objects.all()[0]
@@ -19,7 +19,7 @@ def getinfo_web(request):
     # 判断是否登录
     user = request.user
     print("----------")
-    print("get info web")
+    print("getinfo web")
     print("username:", user)
     print(request)
     print("----------")

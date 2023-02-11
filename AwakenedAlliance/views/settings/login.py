@@ -11,6 +11,9 @@ def signin(request):
         return JsonResponse({
             'result': "用户名或密码不正确"
         })
+    print("+++++++++++")
+    print(user)
+    print("+++++++++++")
     login(request, user)
     return JsonResponse({
         'result': "success"
