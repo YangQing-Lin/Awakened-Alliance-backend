@@ -51,6 +51,7 @@ def receive_code(request):
         })
 
 
+    # 如果用户不存在，则新建一个用户
     get_userinfo_url = "https://www.acwing.com/third_party/api/meta/identity/getinfo/"
     params = {
         "access_token": access_token,
