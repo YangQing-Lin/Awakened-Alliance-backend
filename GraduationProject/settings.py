@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["47.99.103.79", "app4689.acapp.acwing.com.cn"]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'rest_framework',
     'rest_framework_simplejwt',
     'AwakenedAlliance.apps.AwakenedAllianceConfig',
@@ -183,4 +184,14 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+ASGI_APPLICATION = 'acapp.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
