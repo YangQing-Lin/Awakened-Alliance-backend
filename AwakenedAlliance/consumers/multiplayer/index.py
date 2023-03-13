@@ -53,7 +53,7 @@ class MultiPlayer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_name,
             {
-                'type': "group_create_player",
+                'type': "group_send_event",
                 'event': "create_player",
                 'uuid': data['uuid'],
                 'username': data['username'],
@@ -62,8 +62,35 @@ class MultiPlayer(AsyncWebsocketConsumer):
         )
 
 
-    # 每个客户端需要有一个函数来接收群发的消息，函数名与'type'关键字保持一致
-    async def group_create_player(self, data):
+    async def move_toward(self, data):
+        await self.channel_layer.group_send(
+            self.room_name,
+            {
+                'type': "group_send_event",
+                'event': "move_toward",
+                'uuid': data['uuid'],
+                'directions': data['directions'],
+            }
+        )
+
+
+    async def shoot_fireball(self, data):
+        await self.channel_layer.group_send(
+            self.room_name,
+            {
+                'type': "group_send_event",
+                'event': "shoot_fireball",
+                'uuid': data['uuid'],
+                'ball_uuid': data['ball_uuid'],
+                'tx': data['tx'],
+                'ty': data['ty'],
+            }
+        )
+
+
+    # 向当前连接的前端发送消息，函数名与'type'关键字保持一致
+    # 所有的事件都可以通过调用group_send_event()来实现
+    async def group_send_event(self, data):
         await self.send(text_data=json.dumps(data))
 
 
@@ -73,3 +100,7 @@ class MultiPlayer(AsyncWebsocketConsumer):
         event = data['event']
         if event == "create_player":
             await self.create_player(data)
+        elif event == "move_toward":
+            await self.move_toward(data)
+        elif event == "shoot_fireball":
+            await self.shoot_fireball(data)
