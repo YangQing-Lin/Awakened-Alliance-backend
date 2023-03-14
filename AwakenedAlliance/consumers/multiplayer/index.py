@@ -72,7 +72,7 @@ class MultiPlayer(AsyncWebsocketConsumer):
                 'type': "group_send_event",
                 'event': "move_toward",
                 'uuid': data['uuid'],
-                'directions': data['directions'],
+                'directions_array': data['directions_array'],
             }
         )
 
@@ -108,6 +108,19 @@ class MultiPlayer(AsyncWebsocketConsumer):
         )
 
 
+    async def blink(self, data):
+        await self.channel_layer.group_send(
+            self.room_name,
+            {
+                'type': "group_send_event",
+                'event': "blink",
+                'uuid': data['uuid'],
+                'tx': data['tx'],
+                'ty': data['ty'],
+            }
+        )
+
+
     # 向当前连接的前端发送消息，函数名与'type'关键字保持一致
     # 所有的事件都可以通过调用group_send_event()来实现
     async def group_send_event(self, data):
@@ -126,3 +139,5 @@ class MultiPlayer(AsyncWebsocketConsumer):
             await self.shoot_fireball(data)
         elif event == "attack":
             await self.attack(data)
+        elif event == "blink": 
+            await self.blink(data)
