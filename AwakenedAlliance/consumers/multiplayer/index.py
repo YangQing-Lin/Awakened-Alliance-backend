@@ -128,6 +128,7 @@ class MultiPlayer(AsyncWebsocketConsumer):
                 'type': "group_send_event",
                 'event': "message",
                 'uuid': data['uuid'],
+                'username': data['username'],
                 'text': data['text'],
             }
         )
@@ -154,4 +155,4 @@ class MultiPlayer(AsyncWebsocketConsumer):
         elif event == "blink": 
             await self.blink(data)
         elif event == "message":
-            await self.message(uuid, data.text)
+            await self.message(data)
