@@ -66,6 +66,8 @@ class Pool:
                 'photo': p.photo,
                 'hp': 100,
             })
+        # 将玩家加入游戏中
+        cache.set(room_name, players, 3600)  # 有效时间：1小时
         # 所有玩家加入之后再广播，这样就能广播给所有人
         for p in ps:
             # 这里就实现了“匹配进程”调用“服务进程”里面的函数，也就是实现了进程通信

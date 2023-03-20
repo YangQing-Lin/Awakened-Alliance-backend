@@ -9,18 +9,18 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 from MatchSystem.src.match_server.match_service import Match
+from AwakenedAlliance.models.player.player import Player
+from channels.db import database_sync_to_async
 
 
 class MultiPlayer(AsyncWebsocketConsumer):
     # 前端创建连接的时候调用
     async def connect(self):
         await self.accept()
-        print('accept')
 
 
     # 前端刷新或者close()时会执行，但不一定（比如电脑突然断电）
     async def disconnect(self, close_code):
-        print('disconnect')
         if self.room_name:
             await self.channel_layer.group_discard(self.room_name, self.channel_name)
 
@@ -30,7 +30,6 @@ class MultiPlayer(AsyncWebsocketConsumer):
         self.room_name = None
         self.uuid = data['uuid']
         # Make socket
-        print("服务器调用thrift")
         transport = TSocket.TSocket('127.0.0.1', 9090)
 
         # Buffering is critical. Raw sockets are very slow
@@ -42,15 +41,15 @@ class MultiPlayer(AsyncWebsocketConsumer):
         # Create a client to use the protocol encoder
         client = Match.Client(protocol)
 
-        print(data['uuid'], type(data['uuid']))
+        def db_get_player():
+            return Player.objects.get(user__username=data['username'])
 
-        print("打开transport")
+        player = await database_sync_to_async(db_get_player)()
+
         # Connect!
         transport.open()
 
-        print("准备添加player")
-        client.add_player(1500, data['uuid'], data['username'], data['photo'], self.channel_name)
-        print("添加player成功")
+        client.add_player(player.rank_score, data['uuid'], data['username'], data['photo'], self.channel_name)
 
         # Close!
         transport.close()
