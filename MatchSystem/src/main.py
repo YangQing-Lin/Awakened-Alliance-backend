@@ -16,6 +16,9 @@ from queue import Queue
 from time import sleep
 from threading import Thread
 
+from GraduationProject.asgi import channel_layer
+from asgiref.sync import async_to_sync
+from django.core.cache import cache
 
 queue = Queue()  # 消息队列
 
@@ -53,6 +56,29 @@ class Pool:
 
     def match_success(self, ps):
         print("Match Success: %s %s %s" % (ps[0].username, ps[1].username, ps[2].username))
+        room_name = "room-%s-%s-%s" % (ps[0].uuid, ps[1].uuid, ps[2].uuid)
+        players = []
+        for p in ps:
+            async_to_sync(channel_layer.group_add)(room_name, p.channel_name)
+            players.append({
+                'uuid': p.uuid,
+                'username': p.username,
+                'photo': p.photo,
+                'hp': 100,
+            })
+        # 所有玩家加入之后再广播，这样就能广播给所有人
+        for p in ps:
+            # 这里就实现了“匹配进程”调用“服务进程”里面的函数，也就是实现了进程通信
+            async_to_sync(channel_layer.group_send)(
+                room_name,
+                {
+                    'type': "group_send_event",
+                    'event': "create_player",
+                    'uuid': p.uuid,
+                    'username': p.username,
+                    'photo': p.photo,
+                }
+            )
 
     def increase_waiting_time(self):
         for player in self.players:

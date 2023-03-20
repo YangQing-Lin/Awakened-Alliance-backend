@@ -175,6 +175,11 @@ class MultiPlayer(AsyncWebsocketConsumer):
     # 向当前连接的前端发送消息，函数名与'type'关键字保持一致
     # 所有的事件都可以通过调用group_send_event()来实现
     async def group_send_event(self, data):
+        # 匹配进程调用的时候可能还没生成room_name，要在这里获取一下
+        if not self.room_name:
+            keys = cache.keys('*%s*' % (self.uuid))
+            if keys:
+                self.room_name = keys[0]
         await self.send(text_data=json.dumps(data))
 
 

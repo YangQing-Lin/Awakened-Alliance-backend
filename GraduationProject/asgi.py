@@ -9,12 +9,17 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 
 import os
 
+import django
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 from AwakenedAlliance.routing import websocket_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GraduationProject.settings')
+django.setup()
+
+from channels.layers import get_channel_layer
+channel_layer = get_channel_layer()
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
