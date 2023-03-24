@@ -9,13 +9,14 @@ class UpdateScoreView(APIView):
     permission_classes = ([IsAuthenticated])
 
     def post(self, request):
-        score = int(request.POST.get('score', 0))
-        if  score < 0:
+        rank_score = int(request.POST.get('rank_score', 0))
+        print(rank_score)
+        if  rank_score < 0:
             return Response({
-                'result': "score参数不合法"
+                'result': "rank_score参数不合法"
             })
         player = Player.objects.get(user=request.user)
-        player.score = max(player.score, score)
+        player.rank_score = max(player.rank_score, rank_score)
         player.save()
         return Response({
             'result': "success",

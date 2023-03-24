@@ -15,19 +15,19 @@ class GetRankListView(APIView):
             'me': {
                 'username': me.user.username,
                 'photo': me.photo,
-                'score': me.score,
-                'rank': Player.objects.filter(score__gt=me.score).count() + 1,
+                'score': me.rank_score,
+                'rank': Player.objects.filter(rank_score__gt=me.rank_score).count() + 1,
             },
             'all': [],
         }
 
-        players = Player.objects.all().order_by('-score')[:10]
+        players = Player.objects.all().order_by('-rank_score')[:10]
         for player in players:
             res['all'].append({
                 'username': player.user.username,
                 'photo': player.photo,
-                'score': player.score,
-                'rank': Player.objects.filter(score__gt=player.score).count() + 1,
+                'score': player.rank_score,
+                'rank': Player.objects.filter(rank_score__gt=player.rank_score).count() + 1,
             })
 
         return Response(res)
