@@ -20,3 +20,15 @@ uwsgi --ini /home/aa/GraduationProject/scripts/uwsgi.ini
 # 启动uwsgi服务             uwsgi –-ini scripts/uwsgi.ini
 # 启动django_channels服务   daphne -b 0.0.0.0 -p 5015 acapp.asgi:application
 # 启动匹配系统              （在match_system/src目录下） ./main.py
+
+# pip uninstall channels-redis
+# pip install channels-redis==3.4.1
+
+# from django.core.cache import cache
+# def clear():
+#     for key in cache.keys('*'):
+#         cache.delete(key)
+
+# django使用mysql数据库，并从db.sqlite3迁移数据的方法：
+# https://blog.csdn.net/DahlinSky/article/details/104467237
+# https://blog.csdn.net/YPL_ZML/article/details/91892306
