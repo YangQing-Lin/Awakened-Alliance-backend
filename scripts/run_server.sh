@@ -24,5 +24,11 @@ uwsgi --ini /home/aa/GraduationProject/scripts/uwsgi.ini
 # pip uninstall channels-redis
 # pip install channels-redis==3.4.1
 
-# cache.keys('*')
 # from django.core.cache import cache
+# def clear():
+#     for key in cache.keys('*'):
+#         cache.delete(key)
+
+# django使用mysql数据库，并从db.sqlite3迁移数据的方法：
+# https://blog.csdn.net/DahlinSky/article/details/104467237
+# https://blog.csdn.net/YPL_ZML/article/details/91892306

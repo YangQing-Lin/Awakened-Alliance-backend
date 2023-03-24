@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from AwakenedAlliance.models.player.player import Player
+import random
 
 
 class PlayerView(APIView):
@@ -25,7 +26,8 @@ class PlayerView(APIView):
         user = User(username=username)
         user.set_password(password)
         user.save()
-        Player.objects.create(user=user, photo="https://cdn.acwing.com/media/article/image/2022/06/21/1_3b60241ef1-photo.png")
+        photo = "https://project-static-file.oss-cn-hangzhou.aliyuncs.com/avatar/{}.jpeg".format(random.randint(0, 15))
+        Player.objects.create(user=user, photo=photo)
         return Response({
             'result': "success",
         })

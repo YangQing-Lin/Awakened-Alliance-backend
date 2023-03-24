@@ -80,9 +80,17 @@ WSGI_APPLICATION = 'GraduationProject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '47.99.103.79',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'aa',  # 数据库用户名
+        'PASSWORD': 'linqingchuan',  # 数据库用户密码
+        'NAME': 'awakened_alliance'  # 数据库名字
     }
 }
 
