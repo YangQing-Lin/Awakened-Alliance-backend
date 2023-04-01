@@ -3,7 +3,7 @@
 # python3 /home/aa/GraduationProject/manage.py runserver 0.0.0.0:8000
 
 # 更新数据库结构(之后写游戏的时候可以注释掉，只有需要的时候才调用)
-./register_database.sh
+# ./register_database.sh
 
 # 归档静态文件
 echo yes | python3 /home/aa/GraduationProject/manage.py collectstatic
@@ -32,3 +32,9 @@ uwsgi --ini /home/aa/GraduationProject/scripts/uwsgi.ini
 # django使用mysql数据库，并从db.sqlite3迁移数据的方法：
 # https://blog.csdn.net/DahlinSky/article/details/104467237
 # https://blog.csdn.net/YPL_ZML/article/details/91892306
+
+# Linux下修改文件编码为unix
+# vim进入文件   :set ff=unix
+# VS Code修改文件为unix
+# Ctrl+, 搜索eol 修改第一项为\n
+# 之后新建的文件都是unix编码，但是已经存在的文件不会改变

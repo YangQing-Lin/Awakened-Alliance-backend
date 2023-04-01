@@ -110,6 +110,8 @@ class MultiPlayer(AsyncWebsocketConsumer):
                 'event': "move_toward",
                 'uuid': data['uuid'],
                 'directions_array': data['directions_array'],
+                'x': data['x'],
+                'y': data['y'],
             }
         )
 
