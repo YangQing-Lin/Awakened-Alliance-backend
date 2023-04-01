@@ -9,8 +9,30 @@ class UpdateScoreView(APIView):
     permission_classes = ([IsAuthenticated])
 
     def post(self, request):
-        rank_score = int(request.POST.get('rank_score', 0))
-        print(rank_score)
+        score = int(request.POST.get('rank_score', 0))
+        game_mode = str(request.POST.get('game_mode', ""))
+        if game_mode == "single mode":
+            return self.update_single_mode_score(request, score)
+        elif game_mode == "multi mode":
+            return self.update_rank_score(request, score)
+    
+    
+    def update_single_mode_score(self, request, single_mode_score):
+        print("SINGLE MODE SCORE: ", single_mode_score)
+        if  single_mode_score < 0:
+            return Response({
+                'result': "single_mode_score参数不合法"
+            })
+        player = Player.objects.get(user=request.user)
+        player.single_mode_score = max(player.single_mode_score, single_mode_score)
+        player.save()
+        return Response({
+            'result': "success",
+        })
+
+
+    def update_rank_score(self, request, rank_score):
+        print("MULTI MODE SCORE: ", rank_score)
         if  rank_score < 0:
             return Response({
                 'result': "rank_score参数不合法"
